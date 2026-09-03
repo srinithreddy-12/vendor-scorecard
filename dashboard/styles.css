@@ -490,22 +490,47 @@ h1, h2, h3{ margin: 0; }
 
 .onboarding-badge{
   align-self: flex-start;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--amber-badge-fg);
+  background: var(--amber-badge-bg);
+  border: 1px solid var(--amber-badge-border);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: default;
+}
+
+.onboarding-badge-top{
   display: inline-flex;
   align-items: center;
   gap: 7px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--amber-badge-fg);
-  background: var(--amber-badge-bg);
-  border: 1px solid var(--amber-badge-border);
-  padding: 6px 12px;
-  border-radius: 6px;
 }
 
-.onboarding-badge::before{
+.onboarding-badge-top::before{
   content: "\25CF";
   font-size: 8px;
   transform: translateY(-1px);
+  flex-shrink: 0;
+}
+
+/* The 90-day contract window, made visible as a fill rather than just
+   stated in text — the badge is the vendor's whole "trial period," not
+   just a day count. */
+.onboarding-progress-track{
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(125, 82, 5, 0.16);
+  overflow: hidden;
+}
+
+.onboarding-progress-fill{
+  height: 100%;
+  border-radius: 2px;
+  background: var(--amber-badge-fg);
 }
 
 /* ---------- Filters ---------- */

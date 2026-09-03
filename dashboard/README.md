@@ -55,6 +55,11 @@ vendor_name, return_date, issue_type, issue_note, counted_against_vendor`
 `issue_type` is one of `defective, quality, damage, size` (counted) or
 `delivery, wrong_item_shipped, customer_remorse, other` (excluded).
 
+`onboarding_risk` is `true` while `days_since_onboarding < 90` — a fixed
+90-day new-vendor window (`ONBOARDING_WINDOW_DAYS` in `app.js`). The card
+badge shows "day N of 90" with a fill bar for how far through the window
+the vendor is; it never affects `defect_rate_pct` or `status`.
+
 `onboarding_risk` and `counted_against_vendor` arrive from CSV as the strings
 `"true"`/`"false"` (any case) and are coerced to real booleans.
 

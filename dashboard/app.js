@@ -379,11 +379,30 @@ function renderScorecard() {
   grid.innerHTML = sorted.map(renderVendorCard).join("");
 }
 
+/* Contract: onboarding_risk = true when days_since_onboarding < 90 —
+   a fixed 90-day new-vendor window, same for every vendor. */
+const ONBOARDING_WINDOW_DAYS = 90;
+
+function renderOnboardingBadge(v) {
+  const daysLeft = Math.max(0, ONBOARDING_WINDOW_DAYS - v.days_since_onboarding);
+  const progressPct = Math.min(100, (v.days_since_onboarding / ONBOARDING_WINDOW_DAYS) * 100);
+  const title = `${v.days_since_onboarding} of ${ONBOARDING_WINDOW_DAYS} days into the new-vendor window — ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`;
+
+  return `
+    <div class="onboarding-badge" title="${escapeHtml(title)}">
+      <div class="onboarding-badge-top">
+        <span>New vendor — day ${escapeHtml(String(v.days_since_onboarding))} of ${ONBOARDING_WINDOW_DAYS}</span>
+      </div>
+      <div class="onboarding-progress-track">
+        <div class="onboarding-progress-fill" style="width:${progressPct}%"></div>
+      </div>
+    </div>
+  `;
+}
+
 function renderVendorCard(v) {
   const flaggedClass = v.status === "flagged_for_review" ? " is-flagged" : "";
-  const badge = v.onboarding_risk
-    ? `<div class="onboarding-badge">New vendor — ${escapeHtml(String(v.days_since_onboarding))} days</div>`
-    : "";
+  const badge = v.onboarding_risk ? renderOnboardingBadge(v) : "";
 
   return `
     <div class="vendor-card${flaggedClass}">
