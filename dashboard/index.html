@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Quality Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <h1>Vendor Quality Dashboard</h1>
+      <p class="subtitle">Return-based defect tracking by vendor</p>
+    </div>
+    <div class="live-status">
+      <span class="live-dot" id="liveDot"></span>
+      <span id="updatedIndicator">Updated just now</span>
+      <span id="reconnectingNote" class="reconnecting" hidden>reconnecting&hellip;</span>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="kpi-row" id="kpiRow"></section>
+
+  <section class="section" id="scorecardSection">
+    <div class="section-head">
+      <h2>Vendor Scorecard</h2>
+      <p class="section-hint">Sorted by defect rate, highest first</p>
+    </div>
+    <div class="card-grid" id="cardGrid"></div>
+  </section>
+
+  <section class="section" id="analyticsSection">
+    <div class="section-head">
+      <h2>Analytics</h2>
+      <p class="section-hint">All vendors, all returns &mdash; not affected by the table filters below</p>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <h3>Defect rate by vendor</h3>
+        <p class="chart-sub">Vertical rules mark the status thresholds: 6% watch, 8% warning, 10% flagged for review</p>
+      </div>
+      <div class="chart-legend" id="statusLegend"></div>
+      <div class="chart-body" id="defectChart"></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Returns counted vs excluded</h3>
+          <p class="chart-sub">Only quality-related returns count toward a vendor's rate</p>
+        </div>
+        <div class="chart-legend" id="breakdownLegend"></div>
+        <div class="chart-body" id="breakdownChart"></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <h3>Returns by issue type</h3>
+          <p class="chart-sub">Reason selected by the customer at return time</p>
+        </div>
+        <div class="chart-legend" id="issueLegend"></div>
+        <div class="chart-body" id="issueChart"></div>
+      </div>
+    </div>
+
+    <div class="table-view">
+      <button type="button" class="table-view-toggle" id="tableViewToggle" aria-expanded="false">
+        Show data table
+      </button>
+      <div class="table-view-body" id="tableViewBody" hidden></div>
+    </div>
+  </section>
+
+  <section class="section" id="returnsSection">
+    <div class="section-head">
+      <h2>Returns</h2>
+      <p class="section-hint">Click a row for the full traceability chain</p>
+    </div>
+
+    <div class="filters">
+      <label class="filter-field">
+        <span>Vendor</span>
+        <select id="vendorFilter">
+          <option value="">All vendors</option>
+        </select>
+      </label>
+      <label class="filter-toggle">
+        <input type="checkbox" id="countedOnlyToggle">
+        <span>Show only returns counted against vendors</span>
+      </label>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+
+    <div class="table-wrap">
+      <table class="returns-table" id="returnsTable">
+        <thead>
+          <tr>
+            <th>Return ID</th>
+            <th>Order ID</th>
+            <th>SKU</th>
+            <th>Product</th>
+            <th>Vendor</th>
+            <th>Issue type</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="returnsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<div class="chart-tooltip" id="chartTooltip" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>
